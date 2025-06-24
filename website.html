@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eCommerce Auth</title>
+  <link rel="stylesheet" href="website.css" />
+</head>
+<body>
+
+
+<div class="container" id="loginPage">
+  <div class="left-side"></div>
+  <div class="right-side">
+    <form onsubmit="return login(event)">
+      <h2>Welcome Back!</h2>
+      <input type="email" id="loginUser" placeholder="Enter your email" required>
+      <input type="password" id="loginPass" placeholder="Enter your password" required pattern="(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{6,}" title="Min 6 chars with 1 letter & 1 special char">
+      <div class="switch-link"><a onclick="showPage('forgotPage')">Forgot Password?</a></div>
+      <button type="submit">Login</button>
+      <div class="switch-link">Don’t have an account? <a onclick="showPage('signupPage')">Register Now</a></div>
+    </form>
+  </div>
+</div>
+
+
+<div class="container hidden" id="signupPage">
+  <div class="left-side"></div>
+  <div class="right-side">
+    <form onsubmit="return signup(event)">
+      <h2>Create Account</h2>
+      <input type="text" id="signupUser" placeholder="Username" required pattern="[A-Za-z]+" title="Only alphabets allowed">
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPass" placeholder="Password" required pattern="(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{6,}" title="Min 6 chars with 1 letter & 1 special char">
+      <button type="submit">Sign Up</button>
+      <div class="switch-link">Already have an account? <a onclick="showPage('loginPage')">Login</a></div>
+    </form>
+  </div>
+</div>
+
+
+<div class="container hidden" id="forgotPage">
+  <div class="left-side"></div>
+  <div class="right-side">
+    <form onsubmit="return resetPassword(event)">
+      <h2>Reset Password</h2>
+      <input type="email" id="forgotEmail" placeholder="Enter your email" required>
+      <button type="submit">Reset</button>
+      <div class="switch-link"><a onclick="showPage('loginPage')">Back to Login</a></div>
+    </form>
+  </div>
+</div>
+
+
+<div class="hidden" id="homePage">
+  
+  <nav class="navbar">
+  <div class="navbar-title">Mens Fashions</div>
+
+  
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#">Home</a></li>
+    
+    
+    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
+<li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
+
+    <li><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+  
+</nav>
+<div class="product-detail-modal hidden" id="productDetail">
+  <h3 id="detailTitle"></h3>
+  <p id="detailPrice"></p>
+  <button onclick="addToCart()">Add to Cart</button>
+  <button onclick="addToWishlist()">Add to Wishlist</button>
+  <button onclick="closeDetail()">Close</button>
+</div>
+
+
+
+  
+<div class="hero-banner">
+  <div class="arrow left">&#10094;</div>
+  <div class="hero-content">
+    
+  </div>
+  <div class="arrow right">&#10095;</div>
+</div>
+
+
+<div class="search-bar-container">
+  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
+</div>
+
+
+  
+<div class="product-category">
+  <div class="category-header">
+    <h3>Top Picks For shirts</h3>
+    <a href="#" onclick="viewAll('shirts')">View All</a>
+
+  </div>
+  <div class="product-scroll">
+    <div class="product-card">
+      <img src="./12.avif" alt="W">
+      <h4>White shirt</h4>
+      <p>₹600.00</p>
+      <button onclick="showProductDetail('White shirt', '₹600.00', './12.avif')">View</button>
+
+
+      <p class="delivery">Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./kk.jpg" alt="Po">
+      <h4>Red shirt</h4>
+      <p>₹99.00</p>
+      <button onclick="showProductDetail('Red shirt', '₹99.00', './kk.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./n.jpg" alt="Po">
+      <h4>Green shirt</h4>
+      <p>₹890.00</p>
+      <button onclick="showProductDetail('Green shirt', '₹890.00', './n.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./l.jpg" alt="Po">
+      <h4>blue shirt</h4>
+      <p>₹999.00</p>
+      <button onclick="showProductDetail('blue shirt', '₹999.00', './l.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./k.jpg" alt="Po">
+      <h4>black shirt</h4>
+      <p>₹909.00</p>
+      <button onclick="showProductDetail('black shirt', '₹909.00', './k.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./hh.jpg" alt="Po">
+      <h4>check shirt</h4>
+      <p>₹949.00</p>
+      <button onclick="showProductDetail('check shirt', '₹949.00', './hh.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./nimble-made-N0ke5zChVBU-unsplash.jpg" alt="Po">
+      <h4>brown shirt</h4>
+      <p>₹890.00</p>
+      <button onclick="showProductDetail('brown shirt', '₹990.00', './nimble-made-N0ke5zChVBU-unsplash.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./phil-monte-4V4t0JcOM5E-unsplash.jpg" alt="Po">
+      <h4>violet shirt</h4>
+      <p>₹500.00</p>
+      <button onclick="showProductDetail('violet shirt', '₹500.00', './phil-monte-4V4t0JcOM5E-unsplash.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    
+  </div>
+</div>
+
+
+<div class="product-category">
+  <div class="category-header">
+    <h3>Top Picks For Pants</h3>
+    <a href="#" onclick="viewAll('pants')">View All</a>
+
+  </div>
+  <div class="product-scroll">
+    <div class="product-card">
+      <img src="./j.jpg" alt="Sprouts">
+      <h4>Blue Jeans</h4>
+      <p>₹450.00</p>
+      <button onclick="showProductDetail('Blue jeans', '₹450.00', './j.jpg')">View</button>
+      <p class="delivery"> Delivery in 2 days</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>black Jeans</h4>
+      <p>₹300.00</p>
+      <button onclick="showProductDetail('black shirt', '₹300.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>red Jeans</h4>
+      <p>₹400.00</p>
+      <button onclick="showProductDetail('red jeans', '₹400.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>grew Jeans</h4>
+      <p>₹600.00</p>
+      <button onclick="showProductDetail('grew jeans', '₹600.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>aa Jeans</h4>
+      <p>₹700.00</p>
+      <button onclick="showProductDetail('aa jeans', '₹700.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>abc Jeans</h4>
+      <p>800.00</p>
+      <button onclick="showProductDetail('abc jeans', '₹800.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>qq Jeans</h4>
+      <p>₹900.00</p>
+     <button onclick="showProductDetail('qq jeans', '₹900.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    <div class="product-card">
+      <img src="./jeans.jpg" alt="Cabbage">
+      <h4>zz Jeans</h4>
+      <p>₹999.00</p>
+      <button onclick="showProductDetail('zz jeans', '₹999.00', './jeans.jpg')">View</button>
+      <p class="delivery">Quick Delivery in 10 to 30 min</p>
+    </div>
+    </div> 
+</div>
+
+</div>
+</div> 
+
+  <div class="container hidden" id="cartPage">
+  <h2>My Cart</h2>
+  <div id="cartItems"></div>
+  <button onclick="showPage('homePage')">Back</button>
+</div>
+
+<div class="container hidden" id="wishlistPage">
+  <h2>My Wishlist</h2>
+  <div id="wishlistItems"></div>
+  <button onclick="showPage('homePage')">Back</button>
+</div>
+  <footer>
+    <p>&copy; 2025 eCommerce Co.</p>
+  </footer>
+
+
+<script>
+  
+
+  function signup(e) {
+    e.preventDefault();
+    const username = document.getElementById("signupUser").value.trim();
+    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+    const password = document.getElementById("signupPass").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    
+    if (users.find(user => user.email === email)) {
+      alert("This email is already registered.");
+      return;
+    }
+
+    users.push({ username, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Signup successful! Please log in.");
+    showPage('loginPage');
+  }
+
+ function login(e) {
+  e.preventDefault();
+  const email = document.getElementById("loginUser").value.trim().toLowerCase();
+  const password = document.getElementById("loginPass").value;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{6,}$/;
+
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email.");
+    return;
+  }
+
+  if (!passwordRegex.test(password)) {
+    alert("Password must be at least 6 characters, include a letter and a special character.");
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    alert("Invalid email or password.");
+    return;
+  }
+
+  alert("Login successful!");
+  localStorage.setItem("loggedIn", "true"); 
+  showPage('homePage');
+}
+
+
+  function resetPassword(e) {
+    e.preventDefault();
+    const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = users.find(u => u.email === email);
+    if (user) {
+      alert("Password reset link sent to " + email);
+    } else {
+      alert("Email not found. Please check or register.");
+    }
+    showPage('loginPage');
+  }function logout() {
+  localStorage.removeItem("loggedIn"); // ✅ Clear login status
+  alert("Logged out successfully.");
+  showPage('loginPage');
+}
+
+
+function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("active");}
+    function viewAll(category) {
+  const scrollSection = [...document.querySelectorAll('.product-category')].find(section =>
+    section.querySelector('h3')?.textContent?.toLowerCase().includes(category)
+  );
+  if (scrollSection) {
+    scrollSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+function searchProducts() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".product-card");
+
+  cards.forEach(card => {
+    const name = card.querySelector("h4").textContent.toLowerCase();
+    card.style.display = name.includes(query) ? "block" : "none";
+  });
+}
+let currentProduct = {};
+
+function showProductDetail(name, price, image) {
+  currentProduct = { name, price, image };
+  document.getElementById("detailTitle").textContent = name;
+  document.getElementById("detailPrice").textContent = price;
+  document.getElementById("productDetail").classList.remove("hidden");
+}
+
+function closeDetail() {
+  document.getElementById("productDetail").classList.add("hidden");
+}
+
+function addToCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(currentProduct);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to Cart!");
+  closeDetail();
+}
+
+function addToWishlist() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.push(currentProduct);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  alert("Added to Wishlist!");
+  closeDetail();
+}
+
+function showPage(id) {
+  document.querySelectorAll('.container, #homePage').forEach(el => el.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+
+  // Hide product modal on any page change
+  document.getElementById("productDetail").classList.add("hidden");
+
+  if (id === "cartPage") loadCart();
+  if (id === "wishlistPage") loadWishlist();
+}
+
+function loadCart() {
+  const items = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cartItems");
+
+  if (items.length === 0) {
+    container.innerHTML = "<p>No items in cart.</p>";
+    return;
+  }
+
+  container.innerHTML = items
+    .map((item, index) => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          <p>${item.price}</p>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+      </div>
+    `)
+    .join("");
+}
+
+
+
+function loadWishlist() {
+  const items = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const container = document.getElementById("wishlistItems");
+
+  if (items.length === 0) {
+    container.innerHTML = "<p>No items in wishlist.</p>";
+    return;
+  }
+
+  container.innerHTML = items
+    .map((item, index) => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          <p>${item.price}</p>
+        </div>
+        <button class="remove-btn" onclick="removeFromWishlist(${index})">Remove</button>
+      </div>
+    `)
+    .join("");
+}
+
+window.onload = function () {
+  if (localStorage.getItem("loggedIn") === "true") {
+    showPage('homePage');
+  } else {
+    showPage('loginPage');
+  } 
+};
+function removeFromCart(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.splice(index, 1); // Remove item at given index
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart(); // Refresh the cart view
+}
+function removeFromWishlist(index) {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.splice(index, 1); // Remove the item at the index
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  loadWishlist(); // Refresh the wishlist view
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>
