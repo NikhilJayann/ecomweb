@@ -248,6 +248,34 @@
   <div id="wishlistItems"></div>
   <button onclick="showPage('homePage')">Back</button>
 </div>
+<div class="container hidden" id="viewProductPage">
+  <div class="product-view">
+    <div class="product-image">
+      <img id="viewProductImage" src="" alt="Product Image">
+    </div>
+    <div class="product-details">
+      <h2 id="viewProductName">Product Name</h2>
+      <p id="viewProductPrice">₹0.00</p>
+      <p id="viewProductDescription">This is a sample description of the product.</p>
+
+      <div class="product-buttons">
+        <button onclick="addToCartFromView()">Add to Cart</button>
+        <button onclick="addToWishlistFromView()">Add to Wishlist</button>
+        <button onclick="buyNow()">Buy Now</button>
+      </div>
+
+      <h3>Customer Reviews</h3>
+      <ul id="productReviews">
+        <li>⭐⭐⭐⭐⭐ Great quality!</li>
+        <li>⭐⭐⭐⭐ Worth the price.</li>
+        <li>⭐⭐⭐ Decent, but delivery was slow.</li>
+      </ul>
+
+      <button onclick="showPage('homePage')">Back to Home</button>
+    </div>
+  </div>
+</div>
+
   <footer>
     <p>&copy; 2025 eCommerce Co.</p>
   </footer>
@@ -455,6 +483,36 @@ function removeFromWishlist(index) {
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
   loadWishlist(); // Refresh the wishlist view
 }
+function showProductDetail(name, price, image) {
+  currentProduct = { name, price, image };
+
+  document.getElementById("viewProductImage").src = image;
+  document.getElementById("viewProductName").textContent = name;
+  document.getElementById("viewProductPrice").textContent = price;
+  document.getElementById("viewProductDescription").textContent =
+    "This is a high-quality product designed with care. Enjoy reliable performance and stylish design."; // You can customize per product
+
+  showPage("viewProductPage");
+}
+
+function addToCartFromView() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(currentProduct);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to Cart!");
+}
+
+function addToWishlistFromView() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.push(currentProduct);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  alert("Added to Wishlist!");
+}
+
+function buyNow() {
+  alert("Redirecting to payment..."); // You can replace this with a checkout page later
+}
+
 
 
 
