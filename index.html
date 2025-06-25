@@ -22,7 +22,7 @@
     </form>
   </div>
 </div>
-
+ 
 
 <div class="container hidden" id="signupPage">
   <div class="left-side"></div>
@@ -62,7 +62,7 @@
 
   
   <ul class="nav-links" id="navLinks">
-    <li><a href="#">Home</a></li>
+    <li><a href="#" onclick="showpage('homePage')">Home</a></li>
     
     
     <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
@@ -236,23 +236,47 @@
 
 </div>
 </div> 
-
+<header></header>
   <div class="container hidden" id="cartPage">
+    <nav class="navbar">
+  <div class="navbar-title">Mens Fashions</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
+    <li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
+    <li><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</nav>
+
   <h2>My Cart</h2>
   <div id="cartItems"></div>
   <button onclick="showPage('homePage')">Back</button>
 </div>
 
 <div class="container hidden" id="wishlistPage">
+  <nav class="navbar">
+  <div class="navbar-title">Mens Fashions</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('homePage')">Home</a></li>
+    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
+    <li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
+    <li><a href="#" onclick="logout()">Logout</a></li>
+  </ul>
+</nav>
+
   <h2>My Wishlist</h2>
   <div id="wishlistItems"></div>
   <button onclick="showPage('homePage')">Back</button>
 </div>
 <div class="container hidden" id="viewProductPage">
   <div class="product-view">
-    <div class="product-image">
-      <img id="viewProductImage" src="" alt="Product Image">
-    </div>
+    <div class="product-image-wrapper">
+  <img id="viewProductImage" src="" alt="Product Image">
+  <button class="love-icon" onclick="addToWishlistFromView()" title="Add to Wishlist">❤️</button>
+</div>
+
     <div class="product-details">
       <h2 id="viewProductName">Product Name</h2>
       <p id="viewProductPrice">₹0.00</p>
@@ -275,250 +299,9 @@
     </div>
   </div>
 </div>
-
+<div id="toast" class="toast hidden">This is a toast</div>
   <footer>
     <p>&copy; 2025 eCommerce Co.</p>
   </footer>
-
-
-<script>
-  
-
-  function signup(e) {
-    e.preventDefault();
-    const username = document.getElementById("signupUser").value.trim();
-    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
-    const password = document.getElementById("signupPass").value;
-
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    
-    if (users.find(user => user.email === email)) {
-      alert("This email is already registered.");
-      return;
-    }
-
-    users.push({ username, email, password });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Signup successful! Please log in.");
-    showPage('loginPage');
-  }
-
- function login(e) {
-  e.preventDefault();
-  const email = document.getElementById("loginUser").value.trim().toLowerCase();
-  const password = document.getElementById("loginPass").value;
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex = /^(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{6,}$/;
-
-  if (!emailRegex.test(email)) {
-    alert("Please enter a valid email.");
-    return;
-  }
-
-  if (!passwordRegex.test(password)) {
-    alert("Password must be at least 6 characters, include a letter and a special character.");
-    return;
-  }
-
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const user = users.find(u => u.email === email && u.password === password);
-
-  if (!user) {
-    alert("Invalid email or password.");
-    return;
-  }
-
-  alert("Login successful!");
-  localStorage.setItem("loggedIn", "true"); 
-  showPage('homePage');
-}
-
-
-  function resetPassword(e) {
-    e.preventDefault();
-    const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(u => u.email === email);
-    if (user) {
-      alert("Password reset link sent to " + email);
-    } else {
-      alert("Email not found. Please check or register.");
-    }
-    showPage('loginPage');
-  }function logout() {
-  localStorage.removeItem("loggedIn"); // ✅ Clear login status
-  alert("Logged out successfully.");
-  showPage('loginPage');
-}
-
-
-function toggleMenu() {
-    const nav = document.getElementById("navLinks");
-    nav.classList.toggle("active");}
-    function viewAll(category) {
-  const scrollSection = [...document.querySelectorAll('.product-category')].find(section =>
-    section.querySelector('h3')?.textContent?.toLowerCase().includes(category)
-  );
-  if (scrollSection) {
-    scrollSection.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-function searchProducts() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const cards = document.querySelectorAll(".product-card");
-
-  cards.forEach(card => {
-    const name = card.querySelector("h4").textContent.toLowerCase();
-    card.style.display = name.includes(query) ? "block" : "none";
-  });
-}
-let currentProduct = {};
-
-function showProductDetail(name, price, image) {
-  currentProduct = { name, price, image };
-  document.getElementById("detailTitle").textContent = name;
-  document.getElementById("detailPrice").textContent = price;
-  document.getElementById("productDetail").classList.remove("hidden");
-}
-
-function closeDetail() {
-  document.getElementById("productDetail").classList.add("hidden");
-}
-
-function addToCart() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(currentProduct);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Added to Cart!");
-  closeDetail();
-}
-
-function addToWishlist() {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.push(currentProduct);
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  alert("Added to Wishlist!");
-  closeDetail();
-}
-
-function showPage(id) {
-  document.querySelectorAll('.container, #homePage').forEach(el => el.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-
-  // Hide product modal on any page change
-  document.getElementById("productDetail").classList.add("hidden");
-
-  if (id === "cartPage") loadCart();
-  if (id === "wishlistPage") loadWishlist();
-}
-
-function loadCart() {
-  const items = JSON.parse(localStorage.getItem("cart")) || [];
-  const container = document.getElementById("cartItems");
-
-  if (items.length === 0) {
-    container.innerHTML = "<p>No items in cart.</p>";
-    return;
-  }
-
-  container.innerHTML = items
-    .map((item, index) => `
-      <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" />
-        <div class="item-info">
-          <h4>${item.name}</h4>
-          <p>${item.price}</p>
-        </div>
-        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
-      </div>
-    `)
-    .join("");
-}
-
-
-
-function loadWishlist() {
-  const items = JSON.parse(localStorage.getItem("wishlist")) || [];
-  const container = document.getElementById("wishlistItems");
-
-  if (items.length === 0) {
-    container.innerHTML = "<p>No items in wishlist.</p>";
-    return;
-  }
-
-  container.innerHTML = items
-    .map((item, index) => `
-      <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" />
-        <div class="item-info">
-          <h4>${item.name}</h4>
-          <p>${item.price}</p>
-        </div>
-        <button class="remove-btn" onclick="removeFromWishlist(${index})">Remove</button>
-      </div>
-    `)
-    .join("");
-}
-
-window.onload = function () {
-  if (localStorage.getItem("loggedIn") === "true") {
-    showPage('homePage');
-  } else {
-    showPage('loginPage');
-  } 
-};
-function removeFromCart(index) {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(index, 1); // Remove item at given index
-  localStorage.setItem("cart", JSON.stringify(cart));
-  loadCart(); // Refresh the cart view
-}
-function removeFromWishlist(index) {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.splice(index, 1); // Remove the item at the index
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  loadWishlist(); // Refresh the wishlist view
-}
-function showProductDetail(name, price, image) {
-  currentProduct = { name, price, image };
-
-  document.getElementById("viewProductImage").src = image;
-  document.getElementById("viewProductName").textContent = name;
-  document.getElementById("viewProductPrice").textContent = price;
-  document.getElementById("viewProductDescription").textContent =
-    "This is a high-quality product designed with care. Enjoy reliable performance and stylish design."; // You can customize per product
-
-  showPage("viewProductPage");
-}
-
-function addToCartFromView() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(currentProduct);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert("Added to Cart!");
-}
-
-function addToWishlistFromView() {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.push(currentProduct);
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  alert("Added to Wishlist!");
-}
-
-function buyNow() {
-  alert("Redirecting to payment..."); // You can replace this with a checkout page later
-}
-
-
-
-
-</script>
-
-
-
 </body>
 </html>

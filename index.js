@@ -1,0 +1,243 @@
+
+  function signup(e) {
+    e.preventDefault();
+    const username = document.getElementById("signupUser").value.trim();
+    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+    const password = document.getElementById("signupPass").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    
+    if (users.find(user => user.email === email)) {
+      alert("This email is already registered.");
+      return;
+    }
+
+    users.push({ username, email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Signup successful! Please log in.");
+    showPage('loginPage');
+  }
+
+ function login(e) {
+  e.preventDefault();
+  const email = document.getElementById("loginUser").value.trim().toLowerCase();
+  const password = document.getElementById("loginPass").value;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*[!@#$%^&*]).{6,}$/;
+
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email.");
+    return;
+  }
+
+  if (!passwordRegex.test(password)) {
+    alert("Password must be at least 6 characters, include a letter and a special character.");
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    alert("Invalid email or password.");
+    return;
+  }
+
+  alert("Login successful!");
+  localStorage.setItem("loggedIn", "true"); 
+  showPage('homePage');
+}
+
+
+  function resetPassword(e) {
+    e.preventDefault();
+    const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = users.find(u => u.email === email);
+    if (user) {
+      alert("Password reset link sent to " + email);
+    } else {
+      alert("Email not found. Please check or register.");
+    }
+    showPage('loginPage');
+  }function logout() {
+  localStorage.removeItem("loggedIn"); 
+  alert("Logged out successfully.");
+  showPage('loginPage');
+}
+
+
+function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("active");}
+    function viewAll(category) {
+  const scrollSection = [...document.querySelectorAll('.product-category')].find(section =>
+    section.querySelector('h3')?.textContent?.toLowerCase().includes(category)
+  );
+  if (scrollSection) {
+    scrollSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+function searchProducts() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const cards = document.querySelectorAll(".product-card");
+
+  cards.forEach(card => {
+    const name = card.querySelector("h4").textContent.toLowerCase();
+    card.style.display = name.includes(query) ? "block" : "none";
+  });
+}
+let currentProduct = {};
+
+function showProductDetail(name, price, image) {
+  currentProduct = { name, price, image };
+  document.getElementById("detailTitle").textContent = name;
+  document.getElementById("detailPrice").textContent = price;
+  document.getElementById("productDetail").classList.remove("hidden");
+}
+
+function closeDetail() {
+  document.getElementById("productDetail").classList.add("hidden");
+}
+
+function addToCart() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(currentProduct);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to Cart!");
+  closeDetail();
+}
+
+function addToWishlist() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.push(currentProduct);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  alert("Added to Wishlist!");
+  closeDetail();
+}
+
+function showPage(id) {
+  document.querySelectorAll('.container, #homePage').forEach(el => el.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+
+  
+  document.getElementById("productDetail").classList.add("hidden");
+
+  if (id === "cartPage") loadCart();
+  if (id === "wishlistPage") loadWishlist();
+}
+
+function loadCart() {
+  const items = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.getElementById("cartItems");
+
+  if (items.length === 0) {
+    container.innerHTML = "<p>No items in cart.</p>";
+    return;
+  }
+
+  container.innerHTML = items
+    .map((item, index) => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          <p>${item.price}</p>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+      </div>
+    `)
+    .join("");
+}
+
+
+
+function loadWishlist() {
+  const items = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const container = document.getElementById("wishlistItems");
+
+  if (items.length === 0) {
+    container.innerHTML = "<p>No items in wishlist.</p>";
+    return;
+  }
+
+  container.innerHTML = items
+    .map((item, index) => `
+      <div class="cart-item">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="item-info">
+          <h4>${item.name}</h4>
+          <p>${item.price}</p>
+        </div>
+        <button class="remove-btn" onclick="removeFromWishlist(${index})">Remove</button>
+      </div>
+    `)
+    .join("");
+}
+
+window.onload = function () {
+  if (localStorage.getItem("loggedIn") === "true") {
+    showPage('homePage');
+  } else {
+    showPage('loginPage');
+  } 
+};
+function removeFromCart(index) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.splice(index, 1); 
+  localStorage.setItem("cart", JSON.stringify(cart));
+  loadCart(); 
+}
+function removeFromWishlist(index) {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.splice(index, 1); 
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  loadWishlist(); 
+}
+function showProductDetail(name, price, image) {
+  currentProduct = { name, price, image };
+
+  document.getElementById("viewProductImage").src = image;
+  document.getElementById("viewProductName").textContent = name;
+  document.getElementById("viewProductPrice").textContent = price;
+  document.getElementById("viewProductDescription").textContent =
+    "This is a high-quality product designed with care. Enjoy reliable performance and stylish design."; 
+
+  showPage("viewProductPage");
+}
+
+function addToCartFromView() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(currentProduct);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  showToast("Added to Cart!");
+
+}
+
+function addToWishlistFromView() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.push(currentProduct);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+ showToast("Added to Wishlist!");
+
+}
+
+function buyNow() {
+  alert("Redirecting to payment..."); 
+}
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+
+  toast.classList.remove("hidden"); 
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.classList.add("hidden"), 300); 
+  }, 3000); 
+}

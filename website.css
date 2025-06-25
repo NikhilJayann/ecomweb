@@ -351,6 +351,7 @@ nav, footer {
   background-color: #ff6f00;
   color: white;
   position: relative;
+  width: 100%;
 }
 
 .navbar-title {
@@ -404,7 +405,7 @@ nav, footer {
   .nav-links li {
     margin: 10px 0;
   }
-}/* Product Detail Modal */
+}
 .product-detail-modal {
   position: fixed;
   top: 20%;
@@ -454,9 +455,9 @@ nav, footer {
   color: black;
 }
 
-/* Cart & Wishlist Pages */
+
 #cartPage, #wishlistPage {
-  padding: 40px;
+  padding: 10px;
   background: #fff7f0;
 }
 
@@ -503,6 +504,7 @@ nav, footer {
   text-align: center;
   font-style: italic;
   color: #777;
+  width:100%
 }#cartPage button,
 #wishlistPage button {
   background: #ff6f00;
@@ -573,16 +575,21 @@ nav, footer {
 
 .back-btn:hover {
   background-color: #e65c00;
-}/* Fix heading for cart/wishlist pages */
+}
 #cartPage h2,
 #wishlistPage h2 {
-  color: #222;
-  font-size: 28px;
-  margin-bottom: 20px;
   text-align: center;
+  width: 100%;
 }
 
-/* Style for empty message */
+#cartItems,
+#wishlistItems {
+  width: 100%;
+  max-width: 1000px; 
+}
+
+
+
 #cartItems p,
 #wishlistItems p {
   text-align: center;
@@ -592,7 +599,7 @@ nav, footer {
   margin-top: 30px;
 }
 
-/* Align and style back button properly */
+
 #cartPage button,
 #wishlistPage button {
   display: block;
@@ -718,4 +725,63 @@ nav, footer {
   #productReviews li {
     font-size: 14px;
   }
+}.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: #057a1f;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.hidden {
+  display: none;
+}
+
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+
+.love-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: white;
+  color: red;
+  font-size: 22px;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.love-icon:hover {
+  background-color: #ffeaea;
+  transform: scale(1.1);
 }
