@@ -784,4 +784,127 @@ nav, footer {
 .love-icon:hover {
   background-color: #ffeaea;
   transform: scale(1.1);
+}.sort-bar-container {
+  text-align: center;
+  margin: 20px 0;
 }
+
+.sort-bar-container select {
+  padding: 8px 12px;
+  font-size: 16px;
+}.top-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  background-color: #ffe1c6;
+}
+
+.search-bar-container input {
+  padding: 10px 15px;
+  width: 300px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.sort-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sort-bar-container select {
+  padding: 5px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}.product-card {
+  width: 200px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.product-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.product-color {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rating-box {
+  background-color: #388e3c;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.review-count {
+  color: #777;
+  font-size: 13px;
+}
+
+.product-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;   /* Add this */
+  width: 100%;               /* Add this */
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+
+.current-price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+}
+
+.original-price {
+  font-size: 14px;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.discount {
+  font-size: 14px;
+  color: #388e3c;
+  font-weight: 600;
+}
+
+.stock-warning {
+  font-size: 12px;
+  color: #d50057;
+  font-weight: 600;
+}
+.stock-warning {
+  color: red !important;
+}
+
+
+

@@ -240,4 +240,27 @@ function showToast(message) {
     toast.classList.remove("show");
     setTimeout(() => toast.classList.add("hidden"), 300); 
   }, 3000); 
+}function sortProducts() {
+  const sortValue = document.getElementById("sortSelect").value;
+  const productContainers = document.querySelectorAll(".product-scroll");
+
+  productContainers.forEach(container => {
+    const products = Array.from(container.querySelectorAll(".product-card"));
+
+    products.sort((a, b) => {
+      if (sortValue === "priceAsc" || sortValue === "priceDesc") {
+        const priceA = parseInt(a.querySelector(".current-price").innerText.replace(/[^\d]/g, ""));
+        const priceB = parseInt(b.querySelector(".current-price").innerText.replace(/[^\d]/g, ""));
+        return sortValue === "priceAsc" ? priceA - priceB : priceB - priceA;
+      } else if (sortValue === "nameAsc") {
+        return a.querySelector("h4").innerText.localeCompare(b.querySelector("h4").innerText);
+      } else if (sortValue === "nameDesc") {
+        return b.querySelector("h4").innerText.localeCompare(a.querySelector("h4").innerText);
+      }
+      return 0;
+    });
+
+    // Re-append sorted cards
+    products.forEach(product => container.appendChild(product));
+  });
 }

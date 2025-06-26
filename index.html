@@ -92,9 +92,22 @@
 </div>
 
 
-<div class="search-bar-container">
-  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
+<div class="top-bar-container">
+  <div class="search-bar-container">
+    <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
+  </div>
+  <div class="sort-bar-container">
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect" onchange="sortProducts()">
+      <option value="">-- Select --</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="nameAsc">Name: A to Z</option>
+      <option value="nameDesc">Name: Z to A</option>
+    </select>
+  </div>
 </div>
+
 
 
   
@@ -106,63 +119,150 @@
   </div>
   <div class="product-scroll">
     <div class="product-card">
-      <img src="./12.avif" alt="W">
-      <h4>White shirt</h4>
-      <p>₹600.00</p>
-      <button onclick="showProductDetail('White shirt', '₹600.00', './12.avif')">View</button>
+  <img src="./12.avif" alt="White Shirt">
+  
+  <h4 class="product-title">white shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹253</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
 
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './12.avif')">View</button>
+</div>
 
-      <p class="delivery">Delivery in 2 days</p>
-    </div>
     <div class="product-card">
-      <img src="./kk.jpg" alt="Po">
-      <h4>Red shirt</h4>
-      <p>₹99.00</p>
-      <button onclick="showProductDetail('Red shirt', '₹99.00', './kk.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
+  <img src="./kk.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">Red shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹700</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './kk.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./n.jpg" alt="Po">
-      <h4>Green shirt</h4>
-      <p>₹890.00</p>
-      <button onclick="showProductDetail('Green shirt', '₹890.00', './n.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
+  <img src="./n.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹650</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './n.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./l.jpg" alt="Po">
-      <h4>blue shirt</h4>
-      <p>₹999.00</p>
-      <button onclick="showProductDetail('blue shirt', '₹999.00', './l.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
+  <img src="./l.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">green shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹600</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './l.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./k.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">black shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹400</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './k.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./hh.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">yellow shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹300</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './hh.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./nimble-made-N0ke5zChVBU-unsplash.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">check shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹200</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './nimble-made-N0ke5zChVBU-unsplash.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./k.jpg" alt="Po">
-      <h4>black shirt</h4>
-      <p>₹909.00</p>
-      <button onclick="showProductDetail('black shirt', '₹909.00', './k.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
-    <div class="product-card">
-      <img src="./hh.jpg" alt="Po">
-      <h4>check shirt</h4>
-      <p>₹949.00</p>
-      <button onclick="showProductDetail('check shirt', '₹949.00', './hh.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
-    <div class="product-card">
-      <img src="./nimble-made-N0ke5zChVBU-unsplash.jpg" alt="Po">
-      <h4>brown shirt</h4>
-      <p>₹890.00</p>
-      <button onclick="showProductDetail('brown shirt', '₹990.00', './nimble-made-N0ke5zChVBU-unsplash.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
-    <div class="product-card">
-      <img src="./phil-monte-4V4t0JcOM5E-unsplash.jpg" alt="Po">
-      <h4>violet shirt</h4>
-      <p>₹500.00</p>
-      <button onclick="showProductDetail('violet shirt', '₹500.00', './phil-monte-4V4t0JcOM5E-unsplash.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
+  <img src="./phil-monte-4V4t0JcOM5E-unsplash.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">brown shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹500</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './phil-monte-4V4t0JcOM5E-unsplash.jpg')">View</button>
+</div>
     
   </div>
 </div>
@@ -176,61 +276,152 @@
   </div>
   <div class="product-scroll">
     <div class="product-card">
-      <img src="./j.jpg" alt="Sprouts">
-      <h4>Blue Jeans</h4>
-      <p>₹450.00</p>
-      <button onclick="showProductDetail('Blue jeans', '₹450.00', './j.jpg')">View</button>
-      <p class="delivery"> Delivery in 2 days</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹660</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>black Jeans</h4>
-      <p>₹300.00</p>
-      <button onclick="showProductDetail('black shirt', '₹300.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+
+
+  <!-- <h4 class="product-title">blue jeans</h4> -->
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹550</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>red Jeans</h4>
-      <p>₹400.00</p>
-      <button onclick="showProductDetail('red jeans', '₹400.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹450</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>grew Jeans</h4>
-      <p>₹600.00</p>
-      <button onclick="showProductDetail('grew jeans', '₹600.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹400</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>aa Jeans</h4>
-      <p>₹700.00</p>
-      <button onclick="showProductDetail('aa jeans', '₹700.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹300</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>abc Jeans</h4>
-      <p>800.00</p>
-      <button onclick="showProductDetail('abc jeans', '₹800.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹800</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>qq Jeans</h4>
-      <p>₹900.00</p>
-     <button onclick="showProductDetail('qq jeans', '₹900.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹700</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     <div class="product-card">
-      <img src="./jeans.jpg" alt="Cabbage">
-      <h4>zz Jeans</h4>
-      <p>₹999.00</p>
-      <button onclick="showProductDetail('zz jeans', '₹999.00', './jeans.jpg')">View</button>
-      <p class="delivery">Quick Delivery in 10 to 30 min</p>
-    </div>
+  <img src="./j.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">blue jeans</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹600</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './j.jpg')">View</button>
+</div>
     </div> 
 </div>
 
@@ -239,7 +430,7 @@
 <header></header>
   <div class="container hidden" id="cartPage">
     <nav class="navbar">
-  <div class="navbar-title">Mens Fashions</div>
+  <div class="navbar-title">My Cart</div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="showPage('homePage')">Home</a></li>
@@ -249,14 +440,14 @@
   </ul>
 </nav>
 
-  <h2>My Cart</h2>
+  
   <div id="cartItems"></div>
   <button onclick="showPage('homePage')">Back</button>
 </div>
 
 <div class="container hidden" id="wishlistPage">
   <nav class="navbar">
-  <div class="navbar-title">Mens Fashions</div>
+  <div class="navbar-title">Wishlist</div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="showPage('homePage')">Home</a></li>
@@ -266,7 +457,7 @@
   </ul>
 </nav>
 
-  <h2>My Wishlist</h2>
+  
   <div id="wishlistItems"></div>
   <button onclick="showPage('homePage')">Back</button>
 </div>
