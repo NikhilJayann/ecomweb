@@ -271,5 +271,35 @@ function showToast(message) {
   showToast("👋 Logged out successfully!");
   showPage("loginPage");
 }
+function triggerWishlistBubble() {
+  addToWishlistFromView(); // optional if already adding to wishlist
+
+  const bubble = document.querySelector(".wishlist-bubble");
+  bubble.classList.remove("animate");
+  void bubble.offsetWidth; // reflow trick to restart animation
+  bubble.classList.add("animate");
+}const allProducts = [
+  { name: 'white shirt', price: '₹253', image: './12.avif', category: 'shirts' },
+  { name: 'red shirt', price: '₹700', image: './kk.jpg', category: 'shirts' },
+  { name: 'blue shirt', price: '₹650', image: './n.jpg', category: 'shirts' },
+  { name: 'green shirt', price: '₹600', image: './l.jpg', category: 'shirts' },
+  { name: 'black shirt', price: '₹400', image: './k.jpg', category: 'shirts' },
+  { name: 'yellow shirt', price: '₹300', image: './hh.jpg', category: 'shirts' },
+  { name: 'check shirt', price: '₹200', image: './nimble-made-N0ke5zChVBU-unsplash.jpg', category: 'shirts' },
+  { name: 'brown shirt', price: '₹500', image: './phil-monte-4V4t0JcOM5E-unsplash.jpg', category: 'shirts' },
+
+  { name: 'blue jeans', price: '₹660', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹550', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹450', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹400', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹300', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹800', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹700', image: './j.jpg', category: 'pants' },
+  { name: 'blue jeans', price: '₹600', image: './j.jpg', category: 'pants' }
+];
+
+localStorage.setItem("allProducts", JSON.stringify(allProducts));
+
+
 
 

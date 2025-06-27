@@ -1,0 +1,55 @@
+<!-- category.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Category Products</title>
+  <link rel="stylesheet" href="website.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-title">Mens Fashions</div>
+    <div class="nav-icons">
+      <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+      <a href="index.html#wishlistPage" title="Wishlist"><i class="fas fa-heart"></i></a>
+      <a href="index.html#cartPage" title="Cart"><i class="fas fa-shopping-cart"></i></a>
+      <a href="index.html" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </nav>
+
+  <h2 id="categoryTitle"></h2>
+  <div class="product-scroll" id="categoryProducts"></div>
+
+  <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('cat'); // gets "shirts" or "pants"
+  const allProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
+
+  document.getElementById("categoryTitle").textContent = `Top Picks for ${category}`;
+  const container = document.getElementById("categoryProducts");
+
+  const filtered = allProducts.filter(p => p.category === category);
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>No products found.</p>";
+  } else {
+    container.innerHTML = filtered.map(p => `
+      <div class="product-card">
+        <img src="${p.image}" alt="${p.name}">
+        <h4>${p.name}</h4>
+        <div class="product-price"><span class="current-price">${p.price}</span></div>
+        <button class="view-button" onclick="viewDetail('${p.name}', '${p.price}', '${p.image}')">View</button>
+      </div>
+    `).join('');
+  }
+
+  function viewDetail(name, price, image) {
+    localStorage.setItem("selectedProduct", JSON.stringify({ name, price, image }));
+    window.location.href = "index.html#viewProduct";
+  }
+</script>
+
+</body>
+</html>
