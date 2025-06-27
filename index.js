@@ -265,12 +265,11 @@ function showToast(message) {
     products.forEach(product => container.appendChild(product));
   });
 }function logout() {
-  // your logout logic...
-  localStorage.removeItem("loggedInUser");
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("loggedInUser"); // optional
 
-  // Show toast instead of alert
   showToast("👋 Logged out successfully!");
-
   showPage("loginPage");
 }
+
 
