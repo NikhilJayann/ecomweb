@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>eCommerce Auth</title>
   <link rel="stylesheet" href="website.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  
 </head>
 <body>
 
@@ -57,21 +60,19 @@
   <nav class="navbar">
   <div class="navbar-title">Mens Fashions</div>
 
-  
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-  
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#" onclick="showpage('homePage')">Home</a></li>
-    
-    
-    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
-<li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
-
-    <li><a href="#" onclick="logout()">Logout</a></li>
-  </ul>
-  
+  <div class="nav-icons">
+    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
+      <i class="fas fa-heart"></i>
+    </a>
+    <a href="#" onclick="showPage('cartPage')" title="Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <a href="#" onclick="logout()" title="Logout">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </div>
 </nav>
+
 <div class="product-detail-modal hidden" id="productDetail">
   <h3 id="detailTitle"></h3>
   <p id="detailPrice"></p>
@@ -84,18 +85,22 @@
 
   
 <div class="hero-banner">
-  <div class="arrow left">&#10094;</div>
+  
   <div class="hero-content">
     
   </div>
-  <div class="arrow right">&#10095;</div>
+  
 </div>
 
 
 <div class="top-bar-container">
   <div class="search-bar-container">
+  <div class="search-wrapper">
     <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()" />
+    <i class="fa fa-search"></i>
   </div>
+</div>
+
   <div class="sort-bar-container">
     <label for="sortSelect">Sort by:</label>
     <select id="sortSelect" onchange="sortProducts()">
@@ -295,9 +300,7 @@
 </div>
     <div class="product-card">
   <img src="./j.jpg" alt="White Shirt">
-
-
-  <!-- <h4 class="product-title">blue jeans</h4> -->
+  
   
   <h4 class="product-title">blue jeans</h4>
   
@@ -430,66 +433,113 @@
 <header></header>
   <div class="container hidden" id="cartPage">
     <nav class="navbar">
-  <div class="navbar-title">My Cart</div>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#" onclick="showPage('homePage')">Home</a></li>
-    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
-    <li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
-    <li><a href="#" onclick="logout()">Logout</a></li>
-  </ul>
+  <div class="navbar-title">Cart</div>
+  
+  <div class="nav-icons">
+    <a href="#" onclick="showPage('homePage')" title="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
+      <i class="fas fa-heart"></i>
+    </a>
+    <a href="#" onclick="showPage('cartPage')" title="Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <a href="#" onclick="logout()" title="Logout">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </div>
 </nav>
 
+
+<div id="cartItems"></div>
+
   
-  <div id="cartItems"></div>
-  <button onclick="showPage('homePage')">Back</button>
+  
 </div>
 
 <div class="container hidden" id="wishlistPage">
   <nav class="navbar">
   <div class="navbar-title">Wishlist</div>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#" onclick="showPage('homePage')">Home</a></li>
-    <li><a href="#" onclick="showPage('cartPage')">Cart</a></li>
-    <li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
-    <li><a href="#" onclick="logout()">Logout</a></li>
-  </ul>
+  
+  <div class="nav-icons">
+    <a href="#" onclick="showPage('homePage')" title="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
+      <i class="fas fa-heart"></i>
+    </a>
+    <a href="#" onclick="showPage('cartPage')" title="Cart">
+      <i class="fas fa-shopping-cart"></i>
+    </a>
+    <a href="#" onclick="logout()" title="Logout">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </div>
 </nav>
 
   
-  <div id="wishlistItems"></div>
-  <button onclick="showPage('homePage')">Back</button>
+  
+<div id="wishlistItems"></div>
+
 </div>
 <div class="container hidden" id="viewProductPage">
-  <div class="product-view">
-    <div class="product-image-wrapper">
-  <img id="viewProductImage" src="" alt="Product Image">
-  <button class="love-icon" onclick="addToWishlistFromView()" title="Add to Wishlist">❤️</button>
-</div>
+  <nav class="navbar">
+    <div class="navbar-title">Mens Fashions</div>
+    <div class="nav-icons">
+      <a href="#" onclick="showPage('homePage')" title="Home"><i class="fas fa-home"></i></a>
+      <a href="#" onclick="showPage('wishlistPage')" title="Wishlist"><i class="fas fa-heart"></i></a>
+      <a href="#" onclick="showPage('cartPage')" title="Cart"><i class="fas fa-shopping-cart"></i></a>
+      <a href="#" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </nav>
 
-    <div class="product-details">
+  <div class="view-product-wrapper">
+    <div class="view-left">
+      <img id="viewProductImage" src="" alt="Product Image" />
+    </div>
+
+    <div class="view-right">
       <h2 id="viewProductName">Product Name</h2>
-      <p id="viewProductPrice">₹0.00</p>
-      <p id="viewProductDescription">This is a sample description of the product.</p>
+      <p id="viewProductPrice" class="price">₹0.00</p>
 
-      <div class="product-buttons">
-        <button onclick="addToCartFromView()">Add to Cart</button>
-        <button onclick="addToWishlistFromView()">Add to Wishlist</button>
-        <button onclick="buyNow()">Buy Now</button>
-      </div>
+      
 
-      <h3>Customer Reviews</h3>
+      <p id="viewProductDescription">
+        This is a high-quality product designed with care.<br />
+        Enjoy reliable performance and stylish design.
+      </p>
+
+      <h3>DETAILS</h3>
       <ul id="productReviews">
-        <li>⭐⭐⭐⭐⭐ Great quality!</li>
-        <li>⭐⭐⭐⭐ Worth the price.</li>
-        <li>⭐⭐⭐ Decent, but delivery was slow.</li>
+        <li>✅ Made from premium quality fabric</li>
+        <li>✅ Comfortable for all-day wear</li>
+        <li>✅ Stylish and elegant design</li>
+        <li>✅ Easy to wash and maintain</li>
+        <li>✅ Great value for the price</li>
       </ul>
 
-      <button onclick="showPage('homePage')">Back to Home</button>
+      <div class="rating-review">
+        <h3>Customer Rating</h3>
+        <div class="stars">
+          <i class="fas fa-star" style="color: rgb(241, 135, 29)  ;"></i>
+          <i class="fas fa-star" style="color: rgb(241, 135, 29)"></i>
+          <i class="fas fa-star" style="color: rgb(241, 135, 29)"></i>
+          <i class="fas fa-star" style="color: rgb(241, 135, 29);"></i>
+          <i class="fas fa-star-half-alt" style="color: rgb(241, 135, 29);"></i>
+          <span>4.5/5 (89 reviews)</span>
+        </div>
+        <p class="review-text">⭐ “Amazing quality! Fit perfectly and looks great.”</p>
+      </div>
+      <div class="view-actions">
+        <button onclick="addToCartFromView()"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+        <button onclick="addToWishlistFromView()"><i class="fas fa-heart"></i> Wishlist</button>
+        <button onclick="buyNow()"><i class="fas fa-bolt"></i> Buy Now</button>
+      </div>
     </div>
   </div>
 </div>
+
 <div id="toast" class="toast hidden">This is a toast</div>
   <footer>
     <p>&copy; 2025 eCommerce Co.</p>

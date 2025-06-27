@@ -46,7 +46,8 @@
     return;
   }
 
-  alert("Login successful!");
+  showToast("🎉 Welcome back! You are logged in.");
+
   localStorage.setItem("loggedIn", "true"); 
   showPage('homePage');
 }
@@ -263,4 +264,13 @@ function showToast(message) {
     // Re-append sorted cards
     products.forEach(product => container.appendChild(product));
   });
+}function logout() {
+  // your logout logic...
+  localStorage.removeItem("loggedInUser");
+
+  // Show toast instead of alert
+  showToast("👋 Logged out successfully!");
+
+  showPage("loginPage");
 }
+
