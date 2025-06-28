@@ -1,4 +1,4 @@
-<!-- category.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,23 +8,43 @@
   <link rel="stylesheet" href="website.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="category-page">
+
   <nav class="navbar">
-    <div class="navbar-title">Mens Fashions</div>
+    <div class="navbar-title">View</div>
     <div class="nav-icons">
       <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
       <a href="index.html#wishlistPage" title="Wishlist"><i class="fas fa-heart"></i></a>
       <a href="index.html#cartPage" title="Cart"><i class="fas fa-shopping-cart"></i></a>
       <a href="index.html" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
     </div>
-  </nav>
+  </nav><div class="top-bar-container">
+  <div class="search-bar-container">
+    <div class="search-wrapper">
+      <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchCategoryProducts()" />
+      <i class="fa fa-search"></i>
+    </div>
+  </div>
+
+  <div class="sort-bar-container">
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect" onchange="sortCategoryProducts()">
+      <option value="">Select</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="nameAsc">Name: A to Z</option>
+      <option value="nameDesc">Name: Z to A</option>
+    </select>
+  </div>
+</div>
+
 
   <h2 id="categoryTitle"></h2>
   <div class="product-scroll" id="categoryProducts"></div>
 
   <script>
   const urlParams = new URLSearchParams(window.location.search);
-  const category = urlParams.get('cat'); // gets "shirts" or "pants"
+  const category = urlParams.get('cat'); 
   const allProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
 
   document.getElementById("categoryTitle").textContent = `Top Picks for ${category}`;

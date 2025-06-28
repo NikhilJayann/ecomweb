@@ -99,6 +99,8 @@ function showProductDetail(name, price, image) {
   document.getElementById("detailTitle").textContent = name;
   document.getElementById("detailPrice").textContent = price;
   document.getElementById("productDetail").classList.remove("hidden");
+  displayReviews(name); // show reviews for selected product
+
 }
 
 function closeDetail() {
@@ -209,6 +211,7 @@ function showProductDetail(name, price, image) {
     "This is a high-quality product designed with care. Enjoy reliable performance and stylish design."; 
 
   showPage("viewProductPage");
+  
 }
 
 function addToCartFromView() {
@@ -281,12 +284,15 @@ function triggerWishlistBubble() {
 }const allProducts = [
   { name: 'white shirt', price: '₹253', image: './12.avif', category: 'shirts' },
   { name: 'red shirt', price: '₹700', image: './kk.jpg', category: 'shirts' },
+  { name: 'red shirt', price: '₹700', image: './kk.jpg', category: 'shirts' },
   { name: 'blue shirt', price: '₹650', image: './n.jpg', category: 'shirts' },
   { name: 'green shirt', price: '₹600', image: './l.jpg', category: 'shirts' },
   { name: 'black shirt', price: '₹400', image: './k.jpg', category: 'shirts' },
   { name: 'yellow shirt', price: '₹300', image: './hh.jpg', category: 'shirts' },
   { name: 'check shirt', price: '₹200', image: './nimble-made-N0ke5zChVBU-unsplash.jpg', category: 'shirts' },
   { name: 'brown shirt', price: '₹500', image: './phil-monte-4V4t0JcOM5E-unsplash.jpg', category: 'shirts' },
+  { name: 'brown shirt', price: '₹500', image: './phil-monte-4V4t0JcOM5E-unsplash.jpg', category: 'shirts' },
+  
 
   { name: 'blue jeans', price: '₹660', image: './j.jpg', category: 'pants' },
   { name: 'blue jeans', price: '₹550', image: './j.jpg', category: 'pants' },
@@ -300,6 +306,96 @@ function triggerWishlistBubble() {
 
 localStorage.setItem("allProducts", JSON.stringify(allProducts));
 
+function searchCategoryProducts() {
+  const query = document.getElementById("categorySearchInput").value.toLowerCase();
+  const cards = document.querySelectorAll("#categoryProducts .product-card");
 
+  cards.forEach(card => {
+    const name = card.querySelector("h4").textContent.toLowerCase();
+    card.style.display = name.includes(query) ? "block" : "none";
+  });
+}
 
+function sortCategoryProducts() {
+  const sortValue = document.getElementById("categorySortSelect").value;
+  const container = document.getElementById("categoryProducts");
+  const cards = Array.from(container.querySelectorAll(".product-card"));
 
+  cards.sort((a, b) => {
+    const nameA = a.querySelector("h4").textContent;
+    const nameB = b.querySelector("h4").textContent;
+    const priceA = parseInt(a.querySelector(".current-price").textContent.replace(/[^\d]/g, ""));
+    const priceB = parseInt(b.querySelector(".current-price").textContent.replace(/[^\d]/g, ""));
+
+    switch (sortValue) {
+      case "priceAsc": return priceA - priceB;
+      case "priceDesc": return priceB - priceA;
+      case "nameAsc": return nameA.localeCompare(nameB);
+      case "nameDesc": return nameB.localeCompare(nameA);
+      default: return 0;
+    }
+  });
+
+  container.innerHTML = '';
+  cards.forEach(card => container.appendChild(card));
+}
+window.onload = function () {
+  if (localStorage.getItem("loggedIn") === "true") {
+    if (window.location.hash === "#viewProduct") {
+      const selectedProduct = JSON.parse(localStorage.getItem("selectedProduct"));
+      if (selectedProduct) {
+        showProductDetail(selectedProduct.name, selectedProduct.price, selectedProduct.image);
+      }
+    } else {
+      showPage("homePage");
+    }
+  } else {
+    showPage("loginPage");
+  }
+};
+function submitReview() {
+  const text = document.getElementById("reviewText").value.trim();
+  if (!text) {
+    alert("Please enter a review.");
+    return;
+  }
+
+  const reviews = JSON.parse(localStorage.getItem("productReviews")) || {};
+  const productName = currentProduct.name;
+
+  if (!reviews[productName]) {
+    reviews[productName] = [];
+  }
+
+  reviews[productName].push(text);
+  localStorage.setItem("productReviews", JSON.stringify(reviews));
+
+  document.getElementById("reviewText").value = "";
+  showToast("✅ Review submitted!");
+
+  displayReviews(productName); // refresh reviews
+}
+function displayReviews(productName) {
+  const reviews = JSON.parse(localStorage.getItem("productReviews")) || {};
+  const reviewList = reviews[productName] || [];
+
+  const container = document.getElementById("reviewList");
+  container.innerHTML = reviewList.length
+    ? reviewList.map(r => `<li>⭐ ${r}</li>`).join("")
+    : "<li>No reviews yet.</li>";
+}
+function updateCartWishlistCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+  document.getElementById("cartCount").textContent = cart.length;
+  document.getElementById("wishlistCount").textContent = wishlist.length;
+}
+function toggleReviewList() {
+  const section = document.getElementById("reviewSection");
+  section.classList.toggle("hidden");
+
+  if (!section.classList.contains("hidden")) {
+    displayReviews(currentProduct.name);
+  }
+}

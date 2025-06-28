@@ -6,6 +6,7 @@
   <title>eCommerce Auth</title>
   <link rel="stylesheet" href="website.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
 
   
 </head>
@@ -60,17 +61,26 @@
   <nav class="navbar">
   <div class="navbar-title">Mens Fashions</div>
 
-  <div class="nav-icons"><a href="#" onclick="showPage('homePage')" title="Home"><i class="fas fa-home"></i></a>
-    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
-      <i class="fas fa-heart"></i>
-    </a>
-    <a href="#" onclick="showPage('cartPage')" title="Cart">
-      <i class="fas fa-shopping-cart"></i>
-    </a>
-    <a href="#" onclick="logout()" title="Logout">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
-  </div>
+  <div class="nav-icons">
+  <a href="#" onclick="showPage('homePage')" title="Home">
+    <i class="fas fa-home"></i>
+  </a>
+
+  <a href="#" onclick="showPage('wishlistPage')" title="Wishlist" class="icon-wrapper">
+    <i class="fas fa-heart"></i>
+    <span id="wishlistCount" class="count-badge">0</span>
+  </a>
+
+  <a href="#" onclick="showPage('cartPage')" title="Cart" class="icon-wrapper">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cartCount" class="count-badge">0</span>
+  </a>
+
+  <a href="#" onclick="logout()" title="Logout">
+    <i class="fas fa-sign-out-alt"></i>
+  </a>
+</div>
+
 </nav>
 
 <div class="product-detail-modal hidden" id="productDetail">
@@ -144,6 +154,24 @@
 </div>
 
     <div class="product-card">
+  <img src="./kk.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">Red shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹700</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './kk.jpg')">View</button>
+</div>
+<div class="product-card">
   <img src="./kk.jpg" alt="White Shirt">
   
   <h4 class="product-title">Red shirt</h4>
@@ -548,12 +576,26 @@
       <div class="view-actions">
   <button onclick="addToCartFromView()"><i class="fas fa-cart-plus"></i> Add to Cart</button>
   <button onclick="buyNow()"><i class="fas fa-bolt"></i> Buy Now</button>
+
+</div><div id="reviewBox" class="review-box">
+  <h4>Write a Review</h4>
+  <textarea id="reviewText" placeholder="Share your thoughts..." rows="4"></textarea>
+
+  <!-- Button row -->
+  <div class="review-buttons">
+    <button onclick="submitReview()">Submit Review</button>
+    <button onclick="toggleReviewList()">Customer Reviews</button>
+  </div>
+
+  <!-- Review list (initially hidden) -->
+  <div id="reviewSection" class="hidden">
+    <h4>Customer Reviews</h4>
+    <ul id="reviewList" class="review-list"></ul>
+  </div>
 </div>
 
-        <p class="review-text">⭐ Amazing quality! Fit perfectly and looks great.</p>
-        <p class="review-text">⭐ Amazing quality! Fit perfectly and looks great.</p>
-        <p class="review-text">⭐ Amazing quality! Fit perfectly and looks great.</p>
-      </div>
+
+
       </div>
       
     </div>
