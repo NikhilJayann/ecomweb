@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Now - Checkout</title>
+  <link rel="stylesheet" href="buynow.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="page-wrapper">
+    <nav class="navbar">
+      <div class="navbar-title">Payment</div>
+      <div class="nav-icons">
+        <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+        <a href="#" onclick="history.back()" title="Back"><i class="fas fa-arrow-left"></i></a>
+      </div>
+    </nav>
+
+    <div class="checkout-wrapper">
+      <div class="form-section">
+        <h2>Shipping Details</h2>
+        <form id="buyForm">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Enter your name" required />
+
+          <label for="address">Full Address</label>
+          <textarea id="address" placeholder="Enter your delivery address" rows="4" required></textarea>
+
+          <label for="pincode">Pincode</label>
+          <input type="text" id="pincode" pattern="\d{6}" required placeholder="6-digit Pincode" />
+
+          <button type="submit">Confirm & Pay</button>
+        </form>
+      </div>
+
+      <div class="summary-section">
+        <h3>Order Summary</h3>
+        <div class="summary-box">
+          <img id="buyProductImg" src="" alt="Product Image" />
+          <div>
+            <p><strong>Product:</strong> <span id="buyProductTitle">Loading...</span></p>
+            <p><strong>Price:</strong> <span id="buyProductPrice">₹0</span></p>
+            <p><strong>Size:</strong> <span id="buyProductSize">Not selected</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 Mens Fashions. All rights reserved.</p>
+  </footer>
+
+  <script src="buynow.js"></script>
+</body>
+</html>

@@ -225,6 +225,7 @@
 
   <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './l.jpg')">View</button>
 </div>
+
 <div class="product-card">
   <img src="./k.jpg" alt="White Shirt">
   
@@ -537,13 +538,26 @@
     <div class="view-right">
       <h2 id="viewProductName">Product Name</h2>
       <p id="viewProductPrice" class="price">₹0.00</p>
+      
 
       
 
       <p id="viewProductDescription">
         This is a high-quality product designed with care.<br />
         Enjoy reliable performance and stylish design.
-      </p><div class="rating-review">
+      </p>
+      <div class="product-size">
+  <label for="sizeSelect"><strong>Select Size:</strong></label>
+  <select id="sizeSelect" required>
+    <option value="">--Choose--</option>
+    <option value="S">Small (S)</option>
+    <option value="M">Medium (M)</option>
+    <option value="L">Large (L)</option>
+    <option value="XL">Extra Large (XL)</option>
+  </select>
+</div>
+
+      <div class="rating-review">
         <h3>Customer Rating</h3>
         <div class="stars">
           <i class="fas fa-star" style="color: rgb(241, 135, 29)  ;"></i>
@@ -581,13 +595,12 @@
   <h4>Write a Review</h4>
   <textarea id="reviewText" placeholder="Share your thoughts..." rows="4"></textarea>
 
-  <!-- Button row -->
+
   <div class="review-buttons">
     <button onclick="submitReview()">Submit Review</button>
     <button onclick="toggleReviewList()">Customer Reviews</button>
   </div>
 
-  <!-- Review list (initially hidden) -->
   <div id="reviewSection" class="hidden">
     <h4>Customer Reviews</h4>
     <ul id="reviewList" class="review-list"></ul>

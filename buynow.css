@@ -1,0 +1,121 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.page-wrapper {
+  min-height: calc(100vh - 60px); /* Leave space for footer */
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ff6600;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-icons a {
+  color: white;
+  margin-left: 1rem;
+  font-size: 1.6rem;
+}
+
+/* Checkout Layout */
+.checkout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.form-section, .summary-section {
+  flex: 1 1 45%;
+  background-color: white;
+  padding: 1.5rem;
+  margin: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+form label {
+  display: block;
+  margin: 1rem 0 0.5rem;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #f98334;
+}
+
+form button {
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  width: 100%;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.summary-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.summary-box img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Footer */
+.footer {
+  height: 60px;
+  background-color: #ff6600;
+  color: white;
+  text-align: center;
+  line-height: 60px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .form-section, .summary-section {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .summary-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .summary-box img {
+    width: 80px;
+    height: 80px;
+  }
+}
+.navbar-title {
+  font-size: 1.8rem; /* You can increase this value as needed */
+  font-weight: bold;
+}

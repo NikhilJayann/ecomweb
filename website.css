@@ -1485,7 +1485,7 @@ nav, footer {
   padding: 10px;
   font-size: 14px;
   border: none;
-  background-color: #ff5a2c; /* Your button color */
+  background-color: #ff5a2c; 
   color: white;
   cursor: pointer;
   border-radius: 6px;
@@ -1494,13 +1494,64 @@ nav, footer {
 
 .review-buttons button:hover {
   background-color: #e04b1e;
+}.product-size {
+  margin: 10px 0;
 }
 
+.product-size label {
+  margin-right: 10px;
+}
 
+#sizeSelect {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ff8800;
+}
 
+.page-info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
 
+#pageInfo {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
 
+.pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
+.pagination button {
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50%;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.3s;
+  font-weight: 500;
+}
 
+.pagination button.active {
+  background-color: #ff7b00;
+  color: #fff;
+}
 
-
+.pagination .nav-btn {
+  background: none;
+  border: none;
+  color: #ff7b00;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}

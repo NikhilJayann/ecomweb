@@ -1,26 +1,24 @@
+function signup(e) {
+  e.preventDefault();
+  const username = document.getElementById("signupUser").value.trim();
+  const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+  const password = document.getElementById("signupPass").value;
 
-  function signup(e) {
-    e.preventDefault();
-    const username = document.getElementById("signupUser").value.trim();
-    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
-    const password = document.getElementById("signupPass").value;
+  let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    
-    if (users.find(user => user.email === email)) {
-      alert("This email is already registered.");
-      return;
-    }
-
-    users.push({ username, email, password });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Signup successful! Please log in.");
-    showPage('loginPage');
+  if (users.find(user => user.email === email)) {
+    alert("This email is already registered.");
+    return;
   }
 
- function login(e) {
+  users.push({ username, email, password });
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("Signup successful! Please log in.");
+  showPage('loginPage');
+}
+
+function login(e) {
   e.preventDefault();
   const email = document.getElementById("loginUser").value.trim().toLowerCase();
   const password = document.getElementById("loginPass").value;
@@ -47,35 +45,39 @@
   }
 
   showToast("🎉 Welcome back! You are logged in.");
-
-  localStorage.setItem("loggedIn", "true"); 
+  localStorage.setItem("loggedIn", "true");
   showPage('homePage');
+  updateCartWishlistCount();
 }
 
+function resetPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
+  const users = JSON.parse(localStorage.getItem("users")) || [];
 
-  function resetPassword(e) {
-    e.preventDefault();
-    const email = document.getElementById("forgotEmail").value.trim().toLowerCase();
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(u => u.email === email);
-    if (user) {
-      alert("Password reset link sent to " + email);
-    } else {
-      alert("Email not found. Please check or register.");
-    }
-    showPage('loginPage');
-  }function logout() {
-  localStorage.removeItem("loggedIn"); 
-  alert("Logged out successfully.");
+  const user = users.find(u => u.email === email);
+  if (user) {
+    alert("Password reset link sent to " + email);
+  } else {
+    alert("Email not found. Please check or register.");
+  }
   showPage('loginPage');
 }
 
+function logout() {
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("loggedInUser");
+  showToast("👋 Logged out successfully!");
+  showPage("loginPage");
+  updateCartWishlistCount();
+}
 
 function toggleMenu() {
-    const nav = document.getElementById("navLinks");
-    nav.classList.toggle("active");}
-    function viewAll(category) {
+  const nav = document.getElementById("navLinks");
+  nav.classList.toggle("active");
+}
+
+function viewAll(category) {
   const scrollSection = [...document.querySelectorAll('.product-category')].find(section =>
     section.querySelector('h3')?.textContent?.toLowerCase().includes(category)
   );
@@ -83,6 +85,7 @@ function toggleMenu() {
     scrollSection.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
 function searchProducts() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const cards = document.querySelectorAll(".product-card");
@@ -92,15 +95,17 @@ function searchProducts() {
     card.style.display = name.includes(query) ? "block" : "none";
   });
 }
+
 let currentProduct = {};
 
 function showProductDetail(name, price, image) {
   currentProduct = { name, price, image };
-  document.getElementById("detailTitle").textContent = name;
-  document.getElementById("detailPrice").textContent = price;
-  document.getElementById("productDetail").classList.remove("hidden");
-  displayReviews(name); // show reviews for selected product
-
+  document.getElementById("viewProductImage").src = image;
+  document.getElementById("viewProductName").textContent = name;
+  document.getElementById("viewProductPrice").textContent = price;
+  document.getElementById("viewProductDescription").textContent =
+    "This is a high-quality product designed with care. Enjoy reliable performance and stylish design.";
+  showPage("viewProductPage");
 }
 
 function closeDetail() {
@@ -112,6 +117,7 @@ function addToCart() {
   cart.push(currentProduct);
   localStorage.setItem("cart", JSON.stringify(cart));
   alert("Added to Cart!");
+  updateCartWishlistCount(); 
   closeDetail();
 }
 
@@ -120,18 +126,55 @@ function addToWishlist() {
   wishlist.push(currentProduct);
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
   alert("Added to Wishlist!");
+  updateCartWishlistCount(); 
   closeDetail();
+}
+
+function addToCartFromView() {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(currentProduct);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  showToast("Added to Cart!");
+  updateCartWishlistCount(); 
+}
+
+function addToWishlistFromView() {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  wishlist.push(currentProduct);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  showToast("Added to Wishlist!");
+  updateCartWishlistCount(); 
+}
+
+function buyNow() {
+  const selectedSize = document.getElementById("sizeSelect").value || "M";
+  const productToBuy = { ...currentProduct, size: selectedSize };
+
+  localStorage.setItem("buyNowProduct", JSON.stringify(productToBuy));
+  window.location.href = "buynow.html";
+}
+
+
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.classList.add("hidden"), 300);
+  }, 3000);
 }
 
 function showPage(id) {
   document.querySelectorAll('.container, #homePage').forEach(el => el.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
-
-  
   document.getElementById("productDetail").classList.add("hidden");
 
   if (id === "cartPage") loadCart();
   if (id === "wishlistPage") loadWishlist();
+  updateCartWishlistCount(); 
 }
 
 function loadCart() {
@@ -153,11 +196,8 @@ function loadCart() {
         </div>
         <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
       </div>
-    `)
-    .join("");
+    `).join("");
 }
-
-
 
 function loadWishlist() {
   const items = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -178,73 +218,33 @@ function loadWishlist() {
         </div>
         <button class="remove-btn" onclick="removeFromWishlist(${index})">Remove</button>
       </div>
-    `)
-    .join("");
+    `).join("");
 }
 
-window.onload = function () {
-  if (localStorage.getItem("loggedIn") === "true") {
-    showPage('homePage');
-  } else {
-    showPage('loginPage');
-  } 
-};
 function removeFromCart(index) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.splice(index, 1); 
+  cart.splice(index, 1);
   localStorage.setItem("cart", JSON.stringify(cart));
-  loadCart(); 
+  loadCart();
+  updateCartWishlistCount(); 
 }
+
 function removeFromWishlist(index) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.splice(index, 1); 
+  wishlist.splice(index, 1);
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  loadWishlist(); 
-}
-function showProductDetail(name, price, image) {
-  currentProduct = { name, price, image };
-
-  document.getElementById("viewProductImage").src = image;
-  document.getElementById("viewProductName").textContent = name;
-  document.getElementById("viewProductPrice").textContent = price;
-  document.getElementById("viewProductDescription").textContent =
-    "This is a high-quality product designed with care. Enjoy reliable performance and stylish design."; 
-
-  showPage("viewProductPage");
-  
+  loadWishlist();
+  updateCartWishlistCount(); 
 }
 
-function addToCartFromView() {
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(currentProduct);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  showToast("Added to Cart!");
-
+function updateCartWishlistCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  document.getElementById("cartCount").textContent = cart.length;
+  document.getElementById("wishlistCount").textContent = wishlist.length;
 }
 
-function addToWishlistFromView() {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.push(currentProduct);
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
- showToast("Added to Wishlist!");
-
-}
-
-function buyNow() {
-  alert("Redirecting to payment..."); 
-}
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-
-  toast.classList.remove("hidden"); 
-  toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => toast.classList.add("hidden"), 300); 
-  }, 3000); 
-}function sortProducts() {
+function sortProducts() {
   const sortValue = document.getElementById("sortSelect").value;
   const productContainers = document.querySelectorAll(".product-scroll");
 
@@ -264,95 +264,10 @@ function showToast(message) {
       return 0;
     });
 
-    // Re-append sorted cards
     products.forEach(product => container.appendChild(product));
   });
-}function logout() {
-  localStorage.removeItem("loggedIn");
-  localStorage.removeItem("loggedInUser"); // optional
-
-  showToast("👋 Logged out successfully!");
-  showPage("loginPage");
-}
-function triggerWishlistBubble() {
-  addToWishlistFromView(); // optional if already adding to wishlist
-
-  const bubble = document.querySelector(".wishlist-bubble");
-  bubble.classList.remove("animate");
-  void bubble.offsetWidth; // reflow trick to restart animation
-  bubble.classList.add("animate");
-}const allProducts = [
-  { name: 'white shirt', price: '₹253', image: './12.avif', category: 'shirts' },
-  { name: 'red shirt', price: '₹700', image: './kk.jpg', category: 'shirts' },
-  { name: 'red shirt', price: '₹700', image: './kk.jpg', category: 'shirts' },
-  { name: 'blue shirt', price: '₹650', image: './n.jpg', category: 'shirts' },
-  { name: 'green shirt', price: '₹600', image: './l.jpg', category: 'shirts' },
-  { name: 'black shirt', price: '₹400', image: './k.jpg', category: 'shirts' },
-  { name: 'yellow shirt', price: '₹300', image: './hh.jpg', category: 'shirts' },
-  { name: 'check shirt', price: '₹200', image: './nimble-made-N0ke5zChVBU-unsplash.jpg', category: 'shirts' },
-  { name: 'brown shirt', price: '₹500', image: './phil-monte-4V4t0JcOM5E-unsplash.jpg', category: 'shirts' },
-  { name: 'brown shirt', price: '₹500', image: './phil-monte-4V4t0JcOM5E-unsplash.jpg', category: 'shirts' },
-  
-
-  { name: 'blue jeans', price: '₹660', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹550', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹450', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹400', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹300', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹800', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹700', image: './j.jpg', category: 'pants' },
-  { name: 'blue jeans', price: '₹600', image: './j.jpg', category: 'pants' }
-];
-
-localStorage.setItem("allProducts", JSON.stringify(allProducts));
-
-function searchCategoryProducts() {
-  const query = document.getElementById("categorySearchInput").value.toLowerCase();
-  const cards = document.querySelectorAll("#categoryProducts .product-card");
-
-  cards.forEach(card => {
-    const name = card.querySelector("h4").textContent.toLowerCase();
-    card.style.display = name.includes(query) ? "block" : "none";
-  });
 }
 
-function sortCategoryProducts() {
-  const sortValue = document.getElementById("categorySortSelect").value;
-  const container = document.getElementById("categoryProducts");
-  const cards = Array.from(container.querySelectorAll(".product-card"));
-
-  cards.sort((a, b) => {
-    const nameA = a.querySelector("h4").textContent;
-    const nameB = b.querySelector("h4").textContent;
-    const priceA = parseInt(a.querySelector(".current-price").textContent.replace(/[^\d]/g, ""));
-    const priceB = parseInt(b.querySelector(".current-price").textContent.replace(/[^\d]/g, ""));
-
-    switch (sortValue) {
-      case "priceAsc": return priceA - priceB;
-      case "priceDesc": return priceB - priceA;
-      case "nameAsc": return nameA.localeCompare(nameB);
-      case "nameDesc": return nameB.localeCompare(nameA);
-      default: return 0;
-    }
-  });
-
-  container.innerHTML = '';
-  cards.forEach(card => container.appendChild(card));
-}
-window.onload = function () {
-  if (localStorage.getItem("loggedIn") === "true") {
-    if (window.location.hash === "#viewProduct") {
-      const selectedProduct = JSON.parse(localStorage.getItem("selectedProduct"));
-      if (selectedProduct) {
-        showProductDetail(selectedProduct.name, selectedProduct.price, selectedProduct.image);
-      }
-    } else {
-      showPage("homePage");
-    }
-  } else {
-    showPage("loginPage");
-  }
-};
 function submitReview() {
   const text = document.getElementById("reviewText").value.trim();
   if (!text) {
@@ -369,12 +284,11 @@ function submitReview() {
 
   reviews[productName].push(text);
   localStorage.setItem("productReviews", JSON.stringify(reviews));
-
   document.getElementById("reviewText").value = "";
   showToast("✅ Review submitted!");
-
-  displayReviews(productName); // refresh reviews
+  displayReviews(productName);
 }
+
 function displayReviews(productName) {
   const reviews = JSON.parse(localStorage.getItem("productReviews")) || {};
   const reviewList = reviews[productName] || [];
@@ -384,13 +298,7 @@ function displayReviews(productName) {
     ? reviewList.map(r => `<li>⭐ ${r}</li>`).join("")
     : "<li>No reviews yet.</li>";
 }
-function updateCartWishlistCount() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
 
-  document.getElementById("cartCount").textContent = cart.length;
-  document.getElementById("wishlistCount").textContent = wishlist.length;
-}
 function toggleReviewList() {
   const section = document.getElementById("reviewSection");
   section.classList.toggle("hidden");
@@ -399,3 +307,133 @@ function toggleReviewList() {
     displayReviews(currentProduct.name);
   }
 }
+
+function triggerWishlistBubble() {
+  addToWishlistFromView();
+  const bubble = document.querySelector(".wishlist-bubble");
+  bubble.classList.remove("animate");
+  void bubble.offsetWidth;
+  bubble.classList.add("animate");
+}
+
+function viewDetail(name, price, image) {
+  localStorage.setItem("selectedProduct", JSON.stringify({ name, price, image }));
+  window.location.href = "index.html#viewProduct";
+}
+
+window.onload = function () {
+  updateCartWishlistCount(); 
+
+  if (localStorage.getItem("loggedIn") === "true") {
+    if (window.location.hash === "#viewProduct") {
+      const selectedProduct = JSON.parse(localStorage.getItem("selectedProduct"));
+      if (selectedProduct) {
+        showProductDetail(selectedProduct.name, selectedProduct.price, selectedProduct.image);
+      }
+    } else {
+      showPage("homePage");
+    }
+  } else {
+    showPage("loginPage");
+  }
+};
+const urlParams = new URLSearchParams(window.location.search);
+const category = urlParams.get('cat');
+const allProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
+let filtered = allProducts.filter(p => p.category === category);
+
+document.getElementById("categoryTitle").textContent = `Top Picks for ${category}`;
+const container = document.getElementById("categoryProducts");
+const pagination = document.getElementById("pagination");
+
+let currentPage = 1;
+const productsPerPage = 6;
+
+function displayProducts() {
+  const start = (currentPage - 1) * productsPerPage;
+  const end = start + productsPerPage;
+  const currentProducts = filtered.slice(start, end);
+
+  container.innerHTML = currentProducts.map(p => `
+    <div class="product-card">
+      <img src="${p.image}" alt="${p.name}">
+      <h4>${p.name}</h4>
+      <div class="product-price"><span class="current-price">${p.price}</span></div>
+      <button class="view-button" onclick="viewDetail('${p.name}', '${p.price}', '${p.image}')">View</button>
+    </div>
+  `).join('');
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const totalPages = Math.ceil(filtered.length / productsPerPage);
+  const pageInfo = document.getElementById("pageInfo");
+  const pagination = document.getElementById("pagination");
+
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+  pagination.innerHTML = "";
+
+  if (currentPage > 1) {
+    const prev = document.createElement("button");
+    prev.textContent = "PREV";
+    prev.classList.add("nav-btn");
+    prev.onclick = () => {
+      currentPage--;
+      displayProducts();
+    };
+    pagination.appendChild(prev);
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.innerText = i;
+    if (i === currentPage) btn.classList.add("active");
+    btn.onclick = () => {
+      currentPage = i;
+      displayProducts();
+    };
+    pagination.appendChild(btn);
+  }
+
+  if (currentPage < totalPages) {
+    const next = document.createElement("button");
+    next.textContent = "NEXT";
+    next.classList.add("nav-btn");
+    next.onclick = () => {
+      currentPage++;
+      displayProducts();
+    };
+    pagination.appendChild(next);
+  }
+}
+
+
+function viewDetail(name, price, image) {
+  localStorage.setItem("selectedProduct", JSON.stringify({ name, price, image }));
+  window.location.href = "index.html#viewProduct";
+}
+
+function sortCategoryProducts() {
+  const sortValue = document.getElementById("categorySortSelect").value;
+  if (sortValue === "priceAsc") {
+    filtered.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+  } else if (sortValue === "priceDesc") {
+    filtered.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+  } else if (sortValue === "nameAsc") {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortValue === "nameDesc") {
+    filtered.sort((a, b) => b.name.localeCompare(a.name));
+  }
+  currentPage = 1;
+  displayProducts();
+}
+
+function searchCategoryProducts() {
+  const query = document.getElementById("categorySearchInput").value.toLowerCase();
+  filtered = allProducts.filter(p => p.category === category && p.name.toLowerCase().includes(query));
+  currentPage = 1;
+  displayProducts();
+}
+
+displayProducts();
