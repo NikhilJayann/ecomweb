@@ -10,14 +10,23 @@
 <body class="category-page">
 
   <nav class="navbar">
-    <div class="navbar-title">View</div>
-    <div class="nav-icons">
-      <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
-      <a href="index.html#wishlistPage" title="Wishlist"><i class="fas fa-heart"></i></a>
-      <a href="index.html#cartPage" title="Cart"><i class="fas fa-shopping-cart"></i></a>
-      <a href="index.html" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-    </div>
-  </nav>
+  <div class="navbar-title">Mens Fashions</div>
+  <div class="nav-icons">
+    <a href="index.html" title="Home"><i class="fas fa-home"></i></a>
+    
+    <a href="index.html#wishlistPage" title="Wishlist" class="icon-wrapper">
+      <i class="fas fa-heart"></i>
+      <span id="wishlistCount" class="count-badge">0</span>
+    </a>
+    
+    <a href="index.html#cartPage" title="Cart" class="icon-wrapper">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cartCount" class="count-badge">0</span>
+    </a>
+    
+    <a href="index.html" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+</nav>
 
   <div class="top-bar-container">
     <div class="search-bar-container">
@@ -46,6 +55,8 @@
   <div class="pagination" id="pagination"></div>
 </div>
 
+
   <script src="index.js"></script>
+  
 </body>
 </html>

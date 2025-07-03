@@ -7,7 +7,7 @@
 html, body {
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 .page-wrapper {
@@ -40,7 +40,7 @@ html, body {
 
 .form-section, .summary-section {
   flex: 1 1 45%;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   padding: 1.5rem;
   margin: 1rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);

@@ -11,6 +11,28 @@
   
 </head>
 <body>
+  <!-- ✅ Common Navbar used on all pages -->
+<div class="navbar" id="navbar">
+  <div class="navbar-title">Mens Fashions</div>
+  <div class="nav-icons">
+    <a href="#" onclick="showPage('homePage')" title="Home">
+      <i class="fas fa-home"></i>
+    </a>
+    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist" class="icon-wrapper">
+      <i class="fas fa-heart"></i>
+      <span id="wishlistCount" class="count-badge">0</span>
+    </a>
+    <a href="#" onclick="showPage('cartPage')" title="Cart" class="icon-wrapper">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cartCount" class="count-badge">0</span>
+    </a>
+    <a href="#" onclick="logout()" title="Logout">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </div>
+</div>
+
+
 
 
 <div class="container" id="loginPage">
@@ -58,31 +80,7 @@
 
 <div class="hidden" id="homePage">
   
-  <nav class="navbar">
-  <div class="navbar-title">Mens Fashions</div>
-
-  <div class="nav-icons">
-  <a href="#" onclick="showPage('homePage')" title="Home">
-    <i class="fas fa-home"></i>
-  </a>
-
-  <a href="#" onclick="showPage('wishlistPage')" title="Wishlist" class="icon-wrapper">
-    <i class="fas fa-heart"></i>
-    <span id="wishlistCount" class="count-badge">0</span>
-  </a>
-
-  <a href="#" onclick="showPage('cartPage')" title="Cart" class="icon-wrapper">
-    <i class="fas fa-shopping-cart"></i>
-    <span id="cartCount" class="count-badge">0</span>
-  </a>
-
-  <a href="#" onclick="logout()" title="Logout">
-    <i class="fas fa-sign-out-alt"></i>
-  </a>
-</div>
-
-</nav>
-
+  
 <div class="product-detail-modal hidden" id="productDetail">
   <h3 id="detailTitle"></h3>
   <p id="detailPrice"></p>
@@ -207,6 +205,25 @@
 
   <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './n.jpg')">View</button>
 </div>
+
+<div class="product-card">
+  <img src="./kk.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">Red shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹700</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './kk.jpg')">View</button>
+</div>
     <div class="product-card">
   <img src="./l.jpg" alt="White Shirt">
   
@@ -243,6 +260,60 @@
   <p class="stock-warning">Only few left</p>
 
   <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './k.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./l.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">green shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹600</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './l.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./l.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">green shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹600</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './l.jpg')">View</button>
+</div>
+<div class="product-card">
+  <img src="./l.jpg" alt="White Shirt">
+  
+  <h4 class="product-title">green shirt</h4>
+  
+  
+  
+  
+  <div class="product-price">
+    <span class="current-price">₹600</span>
+    <span class="original-price">₹999</span>
+    <span class="discount">74% off</span>
+  </div>
+  
+  <p class="stock-warning">Only few left</p>
+
+  <button class="view-button" onclick="showProductDetail('white shirt', '₹253', './l.jpg')">View</button>
 </div>
 <div class="product-card">
   <img src="./hh.jpg" alt="White Shirt">
@@ -462,68 +533,49 @@
 </div> 
 <header></header>
   <div class="container hidden" id="cartPage">
-    <nav class="navbar">
-  <div class="navbar-title">Cart</div>
-  
-  <div class="nav-icons">
-    <a href="#" onclick="showPage('homePage')" title="Home">
-      <i class="fas fa-home"></i>
-    </a>
-    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
-      <i class="fas fa-heart"></i>
-    </a>
-    <a href="#" onclick="showPage('cartPage')" title="Cart">
-      <i class="fas fa-shopping-cart"></i>
-    </a>
-    <a href="#" onclick="logout()" title="Logout">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
+  <div class="cart-layout">
+    <!-- LEFT: Cart Items -->
+    <div class="cart-left" id="cartItems"></div>
+
+    <!-- RIGHT: Price Summary -->
+    <div class="cart-right">
+      <h3>Price Details (<span id="itemCount">0</span> Items)</h3>
+      <div class="price-details">
+        <p>Total Product Price: <span id="productPrice">₹0</span></p>
+        <p>Total Discounts: <span id="discount">- ₹0</span></p>
+        <hr />
+        <h4>Order Total: <span id="orderTotal">₹0</span></h4>
+        <div class="discount-msg">✅ Yay! Your total discount is ₹<span id="discountValue">0</span></div>
+        <p class="note">Clicking on 'CHECKOUT' will not deduct any money</p>
+        <button class="continue-btn" onclick="window.location.href='buynow.html'">CHECKOUT</button>
+      </div>
+      <div class="safety-box">
+        <img src="download.jpeg" alt="Safety" />
+        <p><strong>Your Safety, Our Priority</strong><br>We make sure that your package is safe at every point of contact.</p>
+      </div>
+    </div>
   </div>
-</nav>
+</div>
 
 
-<div id="cartItems"></div>
+ 
+  
+  </div>
+</div>
 
   
   
 </div>
 
 <div class="container hidden" id="wishlistPage">
-  <nav class="navbar">
-  <div class="navbar-title">Wishlist</div>
   
-  <div class="nav-icons">
-    <a href="#" onclick="showPage('homePage')" title="Home">
-      <i class="fas fa-home"></i>
-    </a>
-    <a href="#" onclick="showPage('wishlistPage')" title="Wishlist">
-      <i class="fas fa-heart"></i>
-    </a>
-    <a href="#" onclick="showPage('cartPage')" title="Cart">
-      <i class="fas fa-shopping-cart"></i>
-    </a>
-    <a href="#" onclick="logout()" title="Logout">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
-  </div>
-</nav>
-
   
   
 <div id="wishlistItems"></div>
 
 </div>
 <div class="container hidden" id="viewProductPage">
-  <nav class="navbar">
-    <div class="navbar-title">Mens Fashions</div>
-    <div class="nav-icons">
-      <a href="#" onclick="showPage('homePage')" title="Home"><i class="fas fa-home"></i></a>
-      <a href="#" onclick="showPage('wishlistPage')" title="Wishlist"><i class="fas fa-heart"></i></a>
-      <a href="#" onclick="showPage('cartPage')" title="Cart"><i class="fas fa-shopping-cart"></i></a>
-      <a href="#" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-    </div>
-  </nav>
-
+  
   <div class="view-product-wrapper">
     <div class="view-left image-wrapper">
   <img id="viewProductImage" src="" alt="Product Image" />

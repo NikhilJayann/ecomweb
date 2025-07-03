@@ -114,29 +114,81 @@ function closeDetail() {
 
 function addToCart() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(currentProduct);
+  const selectedSize = document.getElementById("sizeSelect")?.value || "M";
+
+  const product = {
+    ...currentProduct,
+    size: selectedSize
+  };
+
+  const existingProduct = cart.find(p =>
+    p.name === product.name &&
+    p.image === product.image &&
+    p.size === product.size
+  );
+
+  if (existingProduct) {
+    existingProduct.qty = (existingProduct.qty || 1) + 1;
+  } else {
+    product.qty = 1;
+    cart.push(product);
+  }
+
   localStorage.setItem("cart", JSON.stringify(cart));
   alert("Added to Cart!");
   updateCartWishlistCount(); 
   closeDetail();
 }
 
-function addToWishlist() {
+
+function addToWishlist(product) {
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  wishlist.push(currentProduct);
+
+  // Check if already exists
+  const alreadyInWishlist = wishlist.some(item =>
+    item.title === product.title && item.size === product.size
+  );
+
+  if (alreadyInWishlist) {
+    showToast("✅ Already in wishlist!");
+    return;
+  }
+
+  wishlist.push(product);
   localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  alert("Added to Wishlist!");
-  updateCartWishlistCount(); 
-  closeDetail();
+  showToast("❤️ Added to wishlist");
+  updateWishlistCount();
+  renderWishlist();
 }
+
 
 function addToCartFromView() {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(currentProduct);
+  const selectedSize = document.getElementById("sizeSelect")?.value || "M";
+
+  const product = {
+    ...currentProduct,
+    size: selectedSize
+  };
+
+  const existingProduct = cart.find(p =>
+    p.name === product.name &&
+    p.image === product.image &&
+    p.size === product.size
+  );
+
+  if (existingProduct) {
+    existingProduct.qty = (existingProduct.qty || 1) + 1;
+  } else {
+    product.qty = 1;
+    cart.push(product);
+  }
+
   localStorage.setItem("cart", JSON.stringify(cart));
-  showToast("Added to Cart!");
-  updateCartWishlistCount(); 
+  showToast("🛒 Added to Cart!");
+  updateCartWishlistCount();
 }
+
 
 function addToWishlistFromView() {
   let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -193,11 +245,19 @@ function loadCart() {
         <div class="item-info">
           <h4>${item.name}</h4>
           <p>${item.price}</p>
+          <p>Size: ${item.size || "M"}</p>
+          <p>Qty: ${item.qty || 1}</p>
         </div>
         <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
       </div>
     `).join("");
+     updateCartSummary();
 }
+window.addEventListener("DOMContentLoaded", function () {
+  showPage("cartPage");
+  loadCart(); // Your custom function that renders cart items
+});
+
 
 function loadWishlist() {
   const items = JSON.parse(localStorage.getItem("wishlist")) || [];
@@ -347,7 +407,7 @@ const container = document.getElementById("categoryProducts");
 const pagination = document.getElementById("pagination");
 
 let currentPage = 1;
-const productsPerPage = 6;
+const productsPerPage = 5;
 
 function displayProducts() {
   const start = (currentPage - 1) * productsPerPage;
@@ -437,3 +497,36 @@ function searchCategoryProducts() {
 }
 
 displayProducts();
+function updateCartSummary() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let totalItems = 0;
+  let totalPrice = 0;
+  let totalDiscount = 0;
+
+  cart.forEach(item => {
+    const qty = item.qty || 1;
+    const price = parseInt(item.price.replace(/[₹,]/g, ""));
+    const originalPrice = 999; // Assuming original price for discount is ₹999
+    const discountPerItem = originalPrice - price;
+
+    totalItems += qty;
+    totalPrice += price * qty;
+    totalDiscount += discountPerItem * qty;
+  });
+
+  document.getElementById("itemCount").textContent = totalItems;
+  document.getElementById("productPrice").textContent = `₹${totalPrice}`;
+  document.getElementById("discount").textContent = `- ₹${totalDiscount}`;
+  document.getElementById("orderTotal").textContent = `₹${totalPrice}`;
+  document.getElementById("discountValue").textContent = totalDiscount;
+}
+
+  function toggleNavbar() {
+    const navIcons = document.getElementById("navIcons");
+    const toggleBtn = document.getElementById("menuToggle");
+
+    navIcons.classList.toggle("show");
+    toggleBtn.classList.toggle("open");
+  }
+
