@@ -21,6 +21,18 @@ document.getElementById("buyForm").addEventListener("submit", function (e) {
     return;
   }
 
-  alert("✅ Order placed successfully!\n\nThank you for shopping with us, " + name + "!");
-  window.location.href = "index.html";
+  // Hide the form
+  document.getElementById("buyForm").style.display = "none";
+
+  // Update thank you text
+  document.getElementById("thankYouText").textContent = `Thank you for shopping with us, ${name}!`;
+
+  // Show thank you screen
+  document.getElementById("thankYouScreen").classList.remove("hidden");
+
+  // Optional: Redirect to homepage after 5 seconds
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 5000);
 });
+

@@ -11,11 +11,14 @@
   
 </head>
 <body>
-  <!-- ✅ Common Navbar used on all pages -->
+  
 <div class="navbar" id="navbar">
-  <div class="navbar-title">Mens Fashions</div>
+ 
+  <div class="navbar-title" onclick="showPage('homePage')" style="cursor: pointer;">Mens Fashions</div>
+
+  
   <div class="nav-icons">
-    <a href="#" onclick="showPage('homePage')" title="Home">
+    <a href="#" onclick="showPage('homePage')" title="Home" class="home-icon">
       <i class="fas fa-home"></i>
     </a>
     <a href="#" onclick="showPage('wishlistPage')" title="Wishlist" class="icon-wrapper">
@@ -534,10 +537,10 @@
 <header></header>
   <div class="container hidden" id="cartPage">
   <div class="cart-layout">
-    <!-- LEFT: Cart Items -->
+    
     <div class="cart-left" id="cartItems"></div>
 
-    <!-- RIGHT: Price Summary -->
+   
     <div class="cart-right">
       <h3>Price Details (<span id="itemCount">0</span> Items)</h3>
       <div class="price-details">

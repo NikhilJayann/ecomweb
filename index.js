@@ -521,12 +521,3 @@ function updateCartSummary() {
   document.getElementById("orderTotal").textContent = `₹${totalPrice}`;
   document.getElementById("discountValue").textContent = totalDiscount;
 }
-
-  function toggleNavbar() {
-    const navIcons = document.getElementById("navIcons");
-    const toggleBtn = document.getElementById("menuToggle");
-
-    navIcons.classList.toggle("show");
-    toggleBtn.classList.toggle("open");
-  }
-

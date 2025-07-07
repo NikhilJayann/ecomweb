@@ -119,3 +119,72 @@ form button {
   font-size: 1.8rem; /* You can increase this value as needed */
   font-weight: bold;
 }
+.thank-you-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f0fff4, #d4edda);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.thank-you-box {
+  text-align: center;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.thank-you-box i {
+  font-size: 60px;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.thank-you-box h1 {
+  font-size: 32px;
+  color: #333;
+}
+
+.thank-you-box p {
+  font-size: 18px;
+  color: #555;
+}
+
+.btn-home {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 12px 24px;
+  background: #28a745;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-home:hover {
+  background: #218838;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
